@@ -1,1 +1,561 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>For My Favorite Boy — Birthday Gift</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&family=Shadows+Into+Light&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#0b0f19;          /* dark/navy */
+      --bg-soft:#0f172a;     /* slate */
+      --card:#111827;        /* dark card */
+      --ink:#e5e7eb;         /* text */
+      --muted:#94a3b8;       /* secondary text */
+      --accent:#19c0ff;      /* electric blue */
+      --accent-2:#00ffa3;    /* teal pop */
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{margin:0;background:radial-gradient(1200px 600px at 50% -200px, rgba(25,192,255,.12), transparent 60%),var(--bg);color:var(--ink);font-family:Poppins,system-ui,Segoe UI,Roboto,Arial,sans-serif;}
+
+    /* App shell */
+    .wrap{min-height:100dvh;display:flex;flex-direction:column}
+    header{position:sticky;top:0;z-index:50;background:linear-gradient(180deg,var(--bg) 70%, transparent);backdrop-filter:saturate(1.1) blur(6px);padding:12px 16px;display:flex;align-items:center;gap:12px;border-bottom:1px solid rgba(255,255,255,.06)}
+    .brand{font-weight:800;letter-spacing:.5px}
+    .chip{font-size:12px;color:var(--muted);padding:4px 8px;border:1px solid rgba(255,255,255,.1);border-radius:999px}
+    .spacer{flex:1}
+    .btn{appearance:none;border:0;background:var(--accent);color:#001018;font-weight:700;padding:12px 16px;border-radius:14px;cursor:pointer;box-shadow:0 6px 18px rgba(25,192,255,.28);transition:transform .09s ease, box-shadow .25s}
+    .btn:active{transform:translateY(1px)}
+    .btn.alt{background:transparent;color:var(--ink);border:1px solid rgba(255,255,255,.12);box-shadow:none}
+    .btn.small{padding:8px 12px;border-radius:10px;font-size:12px}
+
+    main{flex:1;display:flex;align-items:center;justify-content:center;padding:16px}
+    .stage{width:min(950px,100%);min-height:70vh;background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));border:1px solid rgba(255,255,255,.1);border-radius:24px;padding:18px;box-shadow:0 30px 120px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.08)}
+
+    .pages{position:relative;height:100%;}
+    .page{position:absolute;inset:0;padding:18px;display:none;overflow:auto}
+    .page.active{display:block;animation:fadeIn .5s ease}
+    @keyframes fadeIn{from{opacity:.001;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+    .nav{display:flex;align-items:center;gap:12px;justify-content:space-between;margin-top:14px}
+    .step{font-size:13px;color:var(--muted)}
+
+    /* ---------- PAGE 1: LOCK CARD (manly theme) ---------- */
+    .locker{display:grid;grid-template-columns:1.15fr .85fr;gap:18px}
+    @media (max-width:860px){.locker{grid-template-columns:1fr;}}
+
+    .card{background:linear-gradient(180deg, #0c1326, #0b1020);border:1px solid rgba(255,255,255,.08);border-radius:20px;padding:18px;box-shadow:0 12px 60px rgba(0,0,0,.35);position:relative;}
+    .title{font-size:28px;margin:0 0 6px 0}
+    .sub{color:var(--muted);margin:0 0 12px 0}
+    .display-input{height:48px;font-size:20px;letter-spacing:1px;background:#0d1427;border:1px dashed rgba(255,255,255,.18);color:var(--ink);border-radius:12px;padding:0 12px;display:flex;align-items:center;justify-content:space-between}
+    .hint{font-size:12px;color:var(--muted);margin:6px 0 12px}
+
+    .pad{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+    .key{background:#0f1a35;border:1px solid rgba(255,255,255,.08);color:var(--ink);padding:14px 10px;border-radius:14px;font-size:18px;font-weight:700;text-align:center;cursor:pointer;user-select:none}
+    .key:active{transform:scale(.99)}
+    .ok{grid-column:span 3;background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#001018}
+
+    /* small heart collage next to keypad */
+    .heart-mini{display:grid;grid-template-columns:repeat(7,38px);grid-auto-rows:38px;gap:6px;justify-content:center;align-content:center;padding:8px}
+    .heart-mini .cell{border-radius:8px;overflow:hidden;border:1px solid rgba(255,255,255,.08);box-shadow:0 6px 18px rgba(0,0,0,.25)}
+    /* heart pattern (7x6) — fill only cells that make the heart */
+    .heart-mini{--cells: calc(7*6)}
+    .heart-mini .cell:nth-child(1),
+    .heart-mini .cell:nth-child(2),
+    .heart-mini .cell:nth-child(4),
+    .heart-mini .cell:nth-child(5),
+    .heart-mini .cell:nth-child(8),
+    .heart-mini .cell:nth-child(9),
+    .heart-mini .cell:nth-child(11),
+    .heart-mini .cell:nth-child(12),
+    .heart-mini .cell:nth-child(13),
+    .heart-mini .cell:nth-child(15),
+    .heart-mini .cell:nth-child(16),
+    .heart-mini .cell:nth-child(17),
+    .heart-mini .cell:nth-child(19),
+    .heart-mini .cell:nth-child(20),
+    .heart-mini .cell:nth-child(21),
+    .heart-mini .cell:nth-child(23),
+    .heart-mini .cell:nth-child(24),
+    .heart-mini .cell:nth-child(25),
+    .heart-mini .cell:nth-child(27),
+    .heart-mini .cell:nth-child(28),
+    .heart-mini .cell:nth-child(29),
+    .heart-mini .cell:nth-child(31),
+    .heart-mini .cell:nth-child(32),
+    .heart-mini .cell:nth-child(33),
+    .heart-mini .cell:nth-child(34),
+    .heart-mini .cell:nth-child(36),
+    .heart-mini .cell:nth-child(37),
+    .heart-mini .cell:nth-child(39),
+    .heart-mini .cell:nth-child(40){display:block}
+    .heart-mini .cell{display:none}
+    .heart-mini img{width:100%;height:100%;object-fit:cover}
+
+    /* ---------- PAGE 2: TIME & AGE ---------- */
+    .timebox{display:grid;gap:14px;grid-template-columns:1.1fr .9fr}
+    @media (max-width:860px){.timebox{grid-template-columns:1fr}}
+    .bigclock{font-size:42px;font-weight:800;letter-spacing:1px}
+    .age{font-size:24px}
+    .bar{height:10px;background:#0f1a35;border-radius:999px;overflow:hidden;border:1px solid rgba(255,255,255,.08)}
+    .bar>span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent-2))}
+    .quote{font-size:18px;color:#cbd5e1}
+
+    /* ---------- PAGE 3: HEART COLLAGE (big) ---------- */
+    .heart{display:grid;grid-template-columns:repeat(9, 1fr);gap:8px;max-width:780px;margin-inline:auto}
+    .heart .tile{position:relative;padding-bottom:100%;border-radius:14px;overflow:hidden;border:1px solid rgba(255,255,255,.08);background:#0f1a35}
+    .heart img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+    /* map tiles to draw a heart (9 cols x 8 rows) */
+    .heart{grid-auto-rows:1fr}
+    /* We create only the indices we want visible using utility classes */
+    .hidden{display:none}
+
+    /* ---------- PAGE 4: HANDWRITTEN LETTER (typewriter) ---------- */
+    .paper{background:linear-gradient(#0b0f19, #0b0f19) padding-box, url('https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=1200&auto=format&fit=crop') center/cover no-repeat;border:1px solid rgba(255,255,255,.12);border-radius:20px;padding:18px;position:relative}
+    .letter{font-family:'Shadows Into Light', cursive; font-size:28px; line-height:1.4; white-space:pre-wrap}
+    .caret{display:inline-block;width:14px;height:28px;background:var(--ink);opacity:.8;margin-left:4px;animation:blink 1s steps(1) infinite}
+    @keyframes blink{50%{opacity:0}}
+
+    /* ---------- PAGE 5: Spotify ---------- */
+    .spotify{display:flex;align-items:center;justify-content:center}
+    .spotify iframe{width:100%;height:380px;border:0;border-radius:16px}
+
+    /* ---------- PAGE 6: Cassette + VN ---------- */
+    .cassette-wrap{display:grid;gap:16px;justify-items:center}
+    .cassette{width:min(480px,94%);aspect-ratio:16/9;border-radius:20px;padding:18px;background:linear-gradient(180deg,#0f1a35,#0b1226);border:1px solid rgba(255,255,255,.12);position:relative;overflow:hidden;box-shadow:0 20px 120px rgba(0,0,0,.35)}
+    .reel{position:absolute;top:50%;width:86px;height:86px;margin-top:-43px;border-radius:999px;border:8px solid rgba(255,255,255,.08);left:22%;animation:spin 3.6s linear infinite}
+    .reel.right{left:auto;right:22%}
+    .reel:before,.reel:after{content:"";position:absolute;inset:18px;border-radius:999px;border:6px solid rgba(255,255,255,.12)}
+    .tape{position:absolute;left:50%;top:50%;width:64%;height:12px;background:linear-gradient(90deg,rgba(255,255,255,.14) 0 40%, transparent 40% 60%, rgba(255,255,255,.14) 60%);transform:translate(-50%,-50%);border-radius:8px}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    audio{width:min(560px,100%)}
+
+    /* ---------- PAGE 7: Gallery ---------- */
+    .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:10px}
+    .grid .ph{position:relative;padding-bottom:110%;border-radius:14px;overflow:hidden;border:1px solid rgba(255,255,255,.08);background:#0f1a35}
+    .grid img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+
+    /* ---------- PAGE 8: Camera Print ---------- */
+    .camera-scene{display:grid;place-items:center;gap:18px}
+    .camera{width:min(520px,96%);height:180px;border-radius:22px;background:linear-gradient(180deg,#0f1a35,#0a142b);border:1px solid rgba(255,255,255,.12);position:relative;box-shadow:0 30px 120px rgba(0,0,0,.35)}
+    .lens{position:absolute;width:84px;height:84px;border-radius:999px;border:10px solid rgba(255,255,255,.12);left:24px;top:48px;background:radial-gradient(circle at 30% 30%, rgba(255,255,255,.35), rgba(0,0,0,.6))}
+    .slot{position:absolute;left:50%;transform:translateX(-50%);bottom:-16px;width:66%;height:22px;background:#0e162c;border:1px solid rgba(255,255,255,.12);border-radius:6px}
+    .polaroid{width:min(320px,80%);aspect-ratio:3/4;background:#fff;color:#000;border-radius:12px;padding:8px;box-shadow:0 12px 50px rgba(0,0,0,.45);position:relative}
+    .polaroid img{width:100%;height:100%;object-fit:cover;border-radius:8px}
+    .print{animation:print 4.6s ease both}
+    .print:nth-child(2){animation-delay:1.4s}
+    .print:nth-child(3){animation-delay:2.8s}
+    @keyframes print{0%{transform:translateY(130%) rotate(6deg)}40%{transform:translateY(20%) rotate(-2deg)}70%{transform:translateY(-6%) rotate(1.5deg)}100%{transform:translateY(-16%) rotate(0)}}
+
+    /* Utility */
+    .muted{color:var(--muted)}
+    .h1{font-size:28px;font-weight:800;margin:4px 0 2px}
+    .p{margin:6px 0 10px}
+    .stack{display:grid;gap:14px}
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="brand">🎁 For My Favorite Boy</div>
+    <div class="chip" id="progressChip">Step 1/8</div>
+    <div class="spacer"></div>
+    <button id="musicBtn" class="btn small alt" title="Toggle music">🔊 Music</button>
+  </header>
+
+  <main>
+    <div class="stage">
+      <!-- Background music players (A for page 1, B for pages 2-8 except page 6 where OFF) -->
+      <audio id="bgA" src="audio/songA.mp3" preload="none" loop></audio>
+      <audio id="bgB" src="audio/songB.mp3" preload="none" loop></audio>
+
+      <div class="pages" id="pages">
+        <!-- ================= PAGE 1: LOCK CARD ================= -->
+        <section class="page active" id="page1" data-music="A">
+          <div class="locker">
+            <div class="card">
+              <h2 class="title">Kartu Rahasia 🔒</h2>
+              <p class="sub">Masukkan <b>tanggal jadian</b> kita (format <b>DD-MM-YYYY</b>)</p>
+              <div class="display-input"><span id="inputVis">__-__-____</span> <small class="muted" id="statusPad">&nbsp;</small></div>
+              <p class="hint">Contoh: 12-06-2023 • Tema dibuat lebih "manly" — dark & blue vibes.</p>
+              <div class="pad" id="pad">
+                <!-- keys generated by JS -->
+              </div>
+            </div>
+            <div class="card">
+              <h3 class="h1">Us — mini collage</h3>
+              <p class="p muted">Foto-foto kamu di shape hati (mini). Ganti src di tag &lt;img&gt; sesuai foto kamu.</p>
+              <div class="heart-mini">
+                <!-- 7x6 potential cells; only some are displayed via CSS :nth-child above -->
+                <!-- Put 40 img tags so the pattern can pick what to show -->
+                <div class="cell"><img src="img/mini1.jpg" alt=""/></div>
+                <div class="cell"><img src="img/mini2.jpg" alt=""/></div>
+                <div class="cell"><img src="img/mini3.jpg" alt=""/></div>
+                <div class="cell"><img src="img/mini4.jpg" alt=""/></div>
+                <div class="cell"><img src="img/mini5.jpg" alt=""/></div>
+                <div class="cell"><img src="img/mini6.jpg" alt=""/></div>
+                <div class="cell"><img src="img/mini7.jpg" alt=""/></div>
+                <div class="cell"><img src="img/mini8.jpg" alt=""/></div>
+                <div class="cell"><img src="img/mini9.jpg" alt=""/></div>
+                <div class="cell"><img src="img/mini10.jpg" alt=""/></div>
+                <div class="cell"><img src="img/mini11.jpg" alt=""/></div>
+                <div class="cell"><img src="img/mini12.jpg" alt=""/></div>
+                <div class="cell"><img src="img/mini13.jpg" alt=""/></div>
+                <div class="cell"><img src="img/mini14.jpg" alt=""/></div>
+                <div class="cell"><img src="img/mini15.jpg" alt=""/></div>
+                <div class="cell"><img src="img/mini16.jpg" alt=""/></div>
+                <div class="cell"><img src="img/mini17.jpg" alt=""/></div>
+                <div class="cell"><img src="img/mini18.jpg" alt=""/></div>
+                <div class="cell"><img src="img/mini19.jpg" alt=""/></div>
+                <div class="cell"><img src="img/mini20.jpg" alt=""/></div>
+                <div class="cell"><img src="img/mini21.jpg" alt=""/></div>
+                <div class="cell"><img src="img/mini22.jpg" alt=""/></div>
+                <div class="cell"><img src="img/mini23.jpg" alt=""/></div>
+                <div class="cell"><img src="img/mini24.jpg" alt=""/></div>
+                <div class="cell"><img src="img/mini25.jpg" alt=""/></div>
+                <div class="cell"><img src="img/mini26.jpg" alt=""/></div>
+                <div class="cell"><img src="img/mini27.jpg" alt=""/></div>
+                <div class="cell"><img src="img/mini28.jpg" alt=""/></div>
+                <div class="cell"><img src="img/mini29.jpg" alt=""/></div>
+                <div class="cell"><img src="img/mini30.jpg" alt=""/></div>
+                <div class="cell"><img src="img/mini31.jpg" alt=""/></div>
+                <div class="cell"><img src="img/mini32.jpg" alt=""/></div>
+                <div class="cell"><img src="img/mini33.jpg" alt=""/></div>
+                <div class="cell"><img src="img/mini34.jpg" alt=""/></div>
+                <div class="cell"><img src="img/mini35.jpg" alt=""/></div>
+                <div class="cell"><img src="img/mini36.jpg" alt=""/></div>
+                <div class="cell"><img src="img/mini37.jpg" alt=""/></div>
+                <div class="cell"><img src="img/mini38.jpg" alt=""/></div>
+                <div class="cell"><img src="img/mini39.jpg" alt=""/></div>
+                <div class="cell"><img src="img/mini40.jpg" alt=""/></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ================= PAGE 2: TIME LINE & AGE ================= -->
+        <section class="page" id="page2" data-music="B">
+          <div class="timebox">
+            <div class="card stack">
+              <h2 class="title">Timeline — Today</h2>
+              <div class="bigclock" id="clock">--:--:--</div>
+              <div class="bar"><span id="dayprog"></span></div>
+              <p class="muted">Progress of the day.</p>
+            </div>
+            <div class="card stack">
+              <h2 class="title">Age</h2>
+              <div class="age">Now: <b id="ageNow">20</b></div>
+              <div class="p muted">At <span id="midnightTxt">00:00</span> 👉 becomes <b id="ageNext">21</b>.</div>
+              <div class="quote" id="ageQuote">Selamat bertambah usia, my favorite boy 🤍</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ================= PAGE 3: HEART COLLAGE (HBD) ================= -->
+        <section class="page" id="page3" data-music="B">
+          <h2 class="title">Happy Birthday ❤</h2>
+          <p class="muted">Ganti src gambar di bawah dengan foto kalian — otomatis membentuk shape hati.</p>
+          <div class="heart" id="heart"></div>
+        </section>
+
+        <!-- ================= PAGE 4: LONG LETTER ================= -->
+        <section class="page" id="page4" data-music="B">
+          <div class="paper">
+            <div class="letter" id="letter"></div>
+          </div>
+        </section>
+
+        <!-- ================= PAGE 5: SPOTIFY PLAYLIST ================= -->
+        <section class="page" id="page5" data-music="B">
+          <div class="spotify">
+            <!-- Replace PLAYLIST_ID below with your actual playlist/share id -->
+            <iframe id="spotifyFrame" src="https://open.spotify.com/embed/playlist/PLAYLIST_ID" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+          </div>
+        </section>
+
+        <!-- ================= PAGE 6: CASSETTE + VOICE NOTE ================= -->
+        <section class="page" id="page6" data-music="NONE">
+          <div class="cassette-wrap">
+            <div class="cassette">
+              <div class="reel"></div>
+              <div class="reel right"></div>
+              <div class="tape"></div>
+            </div>
+            <p class="muted">Play pesan suara dari aku ▶️</p>
+            <audio id="vn" src="audio/voice-note.mp3" controls preload="none"></audio>
+          </div>
+        </section>
+
+        <!-- ================= PAGE 7: MANY MOMENTS ================= -->
+        <section class="page" id="page7" data-music="B">
+          <h2 class="title">Our Moments</h2>
+          <p class="muted">Tambah sebanyak yang kamu mau — tinggal ganti src fotonya.</p>
+          <div class="grid" id="gallery">
+            <div class="ph"><img src="img/g1.jpg" alt=""/></div>
+            <div class="ph"><img src="img/g2.jpg" alt=""/></div>
+            <div class="ph"><img src="img/g3.jpg" alt=""/></div>
+            <div class="ph"><img src="img/g4.jpg" alt=""/></div>
+            <div class="ph"><img src="img/g5.jpg" alt=""/></div>
+            <div class="ph"><img src="img/g6.jpg" alt=""/></div>
+            <div class="ph"><img src="img/g7.jpg" alt=""/></div>
+            <div class="ph"><img src="img/g8.jpg" alt=""/></div>
+            <div class="ph"><img src="img/g9.jpg" alt=""/></div>
+            <div class="ph"><img src="img/g10.jpg" alt=""/></div>
+            <div class="ph"><img src="img/g11.jpg" alt=""/></div>
+            <div class="ph"><img src="img/g12.jpg" alt=""/></div>
+          </div>
+        </section>
+
+        <!-- ================= PAGE 8: CAMERA PRINT EFFECT ================= -->
+        <section class="page" id="page8" data-music="B">
+          <div class="camera-scene">
+            <div class="camera">
+              <div class="lens"></div>
+              <div class="slot"></div>
+            </div>
+            <div class="polaroid print"><img src="img/pol1.jpg" alt=""/></div>
+            <div class="polaroid print"><img src="img/pol2.jpg" alt=""/></div>
+            <div class="polaroid print"><img src="img/pol3.jpg" alt=""/></div>
+          </div>
+        </section>
+      </div>
+
+      <div class="nav">
+        <button id="prev" class="btn alt">◀ Back</button>
+        <div class="step" id="stepTxt">Page 1 / 8</div>
+        <button id="next" class="btn">Next ▶</button>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script>
+/****************************************************
+ * CONFIG — edit these to match your plan
+ ****************************************************/
+const CONFIG = {
+  RELATION_DATE: '12-06-2023',   // <-- ganti dengan tanggal jadian (DD-MM-YYYY)
+  AGE_NOW: 20,                   // umur saat ini
+  NEXT_AGE_AT: '2025-09-01T00:00:00', // <-- ganti ke jam 00:00 di hari ulang tahunnya (local time)
+  LETTER: `Happy birthday, my favorite boy.\n\nHari ini kamu resmi naik level—bukan cuma angka, tapi cara kamu terus grow, fight, dan care. Thank you for choosing me di hari-hari gampang maupun berat.\n\nI promise to be your calm in chaos, your loudest cheer when you win, and your warmest place to land when life feels cold.\n\nKeep chasing your dreams, aku di sebelahmu—always.\n\nLove you, more than yesterday, less than tomorrow.`,
+  SPOTIFY_PLAYLIST: 'PLAYLIST_ID' // ganti juga di iframe bila perlu
+};
+
+/****************************************************
+ * APP STATE
+ ****************************************************/
+const pages = Array.from(document.querySelectorAll('.page'));
+let idx = 0;
+let unlocked = false;
+let muted = false;
+
+const bgA = document.getElementById('bgA');
+const bgB = document.getElementById('bgB');
+const vn = document.getElementById('vn');
+
+function showPage(i){
+  idx = Math.max(0, Math.min(pages.length-1, i));
+  pages.forEach((p,k)=>p.classList.toggle('active', k===idx));
+  document.getElementById('stepTxt').textContent = `Page ${idx+1} / ${pages.length}`;
+  document.getElementById('progressChip').textContent = `Step ${idx+1}/${pages.length}`;
+  manageMusic();
+  if(idx===3) startTypewriter();
+  if(idx===7) resetPrintAnimation();
+}
+
+function next(){
+  if(idx===0 && !unlocked){
+    shakeStatus('Masukin tanggal yang benar dulu ya 😅');
+    return;
+  }
+  showPage(idx+1);
+}
+function prev(){ showPage(idx-1); }
+
+document.getElementById('next').addEventListener('click', ()=>{ userGesturePlay(); next();});
+document.getElementById('prev').addEventListener('click', ()=>{ userGesturePlay(); prev();});
+
+/****************************************************
+ * MUSIC LOGIC
+ * - Page 1 uses A
+ * - Pages 2-8 use B
+ * - Page 6 stops bg music (only VN)
+ ****************************************************/
+function userGesturePlay(){
+  // attempt to prime audio on first user gesture (mobile autoplay policy)
+  if(!muted){
+    const p = pages[idx].dataset.music;
+    if(p==='A') bgA.play().catch(()=>{});
+    if(p==='B') bgB.play().catch(()=>{});
+  }
+}
+
+function manageMusic(){
+  const mode = pages[idx].dataset.music;
+  if(mode==='A'){
+    bgB.pause(); bgB.currentTime = bgB.currentTime; // keep position
+    if(!muted){ bgA.play().catch(()=>{});} else { bgA.pause(); }
+  } else if(mode==='B'){
+    bgA.pause(); bgA.currentTime = bgA.currentTime;
+    if(!muted){ bgB.play().catch(()=>{});} else { bgB.pause(); }
+  } else { // NONE
+    bgA.pause(); bgB.pause();
+  }
+  if(idx===5){ // on VN page ensure bg paused
+    bgA.pause(); bgB.pause();
+  }
+}
+
+document.getElementById('musicBtn').addEventListener('click', ()=>{
+  muted = !muted;
+  document.getElementById('musicBtn').textContent = muted ? '🔇 Music' : '🔊 Music';
+  manageMusic();
+});
+
+/****************************************************
+ * PAGE 1 — LOCKER with keypad
+ ****************************************************/
+const keys = ['1','2','3','4','5','6','7','8','9','🗑','0','✅'];
+const pad = document.getElementById('pad');
+let entered = '';
+keys.forEach(k=>{
+  const b = document.createElement('button');
+  b.className = 'key';
+  b.textContent = k;
+  b.addEventListener('click', ()=>{
+    if(k==='🗑'){ entered = entered.slice(0,-1); formatInput(); return; }
+    if(k==='✅'){ validateDate(); return; }
+    if(entered.replaceAll('-','').length >= 8) return; // limit
+    entered += k;
+    entered = entered.replace(/[^0-9]/g,'');
+    formatInput();
+  });
+  pad.appendChild(b);
+});
+
+function formatInput(){
+  let raw = entered;
+  if(raw.length>4) raw = raw.substring(0,4) + '-' + raw.substring(4);
+  if(raw.length>2) raw = raw.substring(0,2) + '-' + raw.substring(2);
+  document.getElementById('inputVis').textContent = raw.padEnd(10,'_');
+}
+
+function shakeStatus(msg){
+  const el = document.getElementById('statusPad');
+  el.textContent = msg;
+  el.style.color = '#ff9ca8';
+  el.animate([{transform:'translateX(0)'},{transform:'translateX(-4px)'},{transform:'translateX(4px)'},{transform:'translateX(0)'}],{duration:360});
+}
+
+function validateDate(){
+  const val = document.getElementById('inputVis').textContent.trim();
+  if(val === CONFIG.RELATION_DATE){
+    unlocked = true;
+    const el = document.getElementById('statusPad');
+    el.style.color = '#00ffa3';
+    el.textContent = 'Unlocked! Tap NEXT ➜';
+    // start music A when unlocked
+    if(!muted) bgA.play().catch(()=>{});
+  } else {
+    shakeStatus('Salah. Pakai format DD-MM-YYYY ya.');
+  }
+}
+
+/****************************************************
+ * PAGE 2 — clock, progress bar, age flip at midnight
+ ****************************************************/
+const clockEl = document.getElementById('clock');
+const bar = document.getElementById('dayprog');
+const ageNowEl = document.getElementById('ageNow');
+const ageNextEl = document.getElementById('ageNext');
+const midnightTxt = document.getElementById('midnightTxt');
+const ageQuote = document.getElementById('ageQuote');
+
+const TARGET = new Date(CONFIG.NEXT_AGE_AT);
+midnightTxt.textContent = TARGET.toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
+ageNowEl.textContent = CONFIG.AGE_NOW;
+ageNextEl.textContent = CONFIG.AGE_NOW + 1;
+
+function tick(){
+  const now = new Date();
+  clockEl.textContent = now.toLocaleTimeString();
+  const start = new Date(now); start.setHours(0,0,0,0);
+  const end = new Date(now);   end.setHours(24,0,0,0);
+  const pct = Math.max(0, Math.min(1, (now - start) / (end - start)));
+  bar.style.width = (pct*100)+"%";
+  const age = now >= TARGET ? CONFIG.AGE_NOW+1 : CONFIG.AGE_NOW;
+  ageNowEl.textContent = age;
+  if(now >= TARGET) ageQuote.textContent = 'Happy leveling up — welcome 21! 🎂';
+}
+setInterval(tick, 1000); tick();
+
+/****************************************************
+ * PAGE 3 — build big heart collage (9x8)
+ ****************************************************/
+const heart = document.getElementById('heart');
+// heart mask: indices (row,col) to show; we will append tiles for these cells.
+const heartMask = [
+  // row 1..8, col 1..9 (1-indexed)
+  [2,3,7,8],                 // row1
+  [1,3,4,6,7,9],             // row2
+  [1,2,3,4,6,7,8,9],         // row3
+  [1,2,3,4,5,6,7,8,9],       // row4
+  [2,3,4,6,7,8],             // row5
+  [3,4,6,7],                 // row6
+  [4,6],                     // row7
+  [5]                        // row8 (the tip)
+];
+const heartImages = [
+  'img/h1.jpg','img/h2.jpg','img/h3.jpg','img/h4.jpg','img/h5.jpg','img/h6.jpg','img/h7.jpg','img/h8.jpg','img/h9.jpg','img/h10.jpg','img/h11.jpg','img/h12.jpg','img/h13.jpg','img/h14.jpg','img/h15.jpg','img/h16.jpg','img/h17.jpg','img/h18.jpg','img/h19.jpg','img/h20.jpg','img/h21.jpg','img/h22.jpg','img/h23.jpg','img/h24.jpg','img/h25.jpg','img/h26.jpg','img/h27.jpg','img/h28.jpg','img/h29.jpg','img/h30.jpg'
+];
+let imgI = 0;
+heartMask.forEach((cols)=>{
+  for(let c=1;c<=9;c++){
+    const show = cols.includes(c);
+    const tile = document.createElement('div');
+    tile.className = 'tile'+(show?'':' hidden');
+    if(show){
+      const im = document.createElement('img');
+      im.src = heartImages[imgI % heartImages.length];
+      imgI++;
+      tile.appendChild(im);
+    }
+    heart.appendChild(tile);
+  }
+});
+
+/****************************************************
+ * PAGE 4 — Typewriter letter
+ ****************************************************/
+const letterEl = document.getElementById('letter');
+let typed = false;
+function startTypewriter(){
+  if(typed) return; typed = true;
+  const text = CONFIG.LETTER;
+  let i=0; letterEl.textContent='';
+  const caret = document.createElement('span'); caret.className='caret';
+  letterEl.after(caret);
+  const iv = setInterval(()=>{
+    letterEl.textContent = text.slice(0, i++);
+    if(i>text.length){ clearInterval(iv); caret.remove(); }
+  }, 22);
+}
+
+/****************************************************
+ * PAGE 8 — restart print animation when re-entered
+ ****************************************************/
+function resetPrintAnimation(){
+  document.querySelectorAll('#page8 .print').forEach(el=>{
+    el.style.animation='none'; void el.offsetHeight; el.style.animation='';
+  });
+}
+
+// Init
+showPage(0);
+
+</script>
+</body>
+</html>
+
 
